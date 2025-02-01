@@ -1,0 +1,24 @@
+# Список исключений (через пробел, поддерживает wildcards)
+EXCLUSIONS=("constant" "system" ".foam" "clean" "readme.txt")
+
+# Функция проверки исключений
+is_excluded() {
+    local file="$1"
+    for pattern in "${EXCLUSIONS[@]}"; do
+        if [[ "$file" == $pattern ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Удаление временных шагов
+find . -maxdepth 1 -type d \( -name "[0-9]*" -o -name "[0-9]*.[0-9]*" \) | while read dir; do
+    dir_name=$(basename "$dir")
+    if ! is_excluded "$dir_name"; then
+        echo "Удаление: $dir_name"
+        rm -rf "$dir"
+    fi
+done
+
+echo "Очистка завершена :)"
