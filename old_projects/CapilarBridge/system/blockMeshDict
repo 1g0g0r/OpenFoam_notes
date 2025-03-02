@@ -1,0 +1,112 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ 
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+ 
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+ 
+    class           dictionary;
+    object          blockMeshDict;
+}
+ 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+ 
+scale 0.01;
+ 
+vertices
+(
+(0 0 0)
+(1.5 0.05 0)
+(1.5 0.05 0.5) 
+(0 0 0.5)
+(1.5 -0.05 0) 
+(1.5 -0.05 0.5)
+);
+ 
+blocks
+(
+hex (0 4 1 0 3 5 2 3) (300  1 100) simpleGrading (1 1 1)
+);
+ 
+edges
+(
+);
+ 
+boundary
+(
+     front
+     { 
+           type wedge;
+           faces  
+           (
+               (0 1 2 3)
+           );
+      }
+     back
+     { 
+           type wedge;
+           faces  
+           (
+               (0 3 5 4)
+           );
+      }
+     tankWall
+     { 
+           type wall;
+           faces  
+           (
+               (1 4 5 2)
+           );
+      }
+     bottom
+     { 
+           type wall;
+           faces  
+           (
+               (0 4 1 0)
+           );
+      }
+     top
+     { 
+           type wall;
+           faces  
+           (
+               (3 5 2 3)
+           );
+      }
+     axis
+     { 
+           type empty;
+           faces  
+           (
+               (0 3 3 0)
+           );
+      }
+);
+ 
+mergePatchPairs
+(
+);
+
+
+// ************************************************************************* //

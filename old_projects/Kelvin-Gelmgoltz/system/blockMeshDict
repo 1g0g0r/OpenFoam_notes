@@ -1,0 +1,135 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ 
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+ 
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+ 
+    class           dictionary;
+    object          blockMeshDict;
+}
+ 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+ 
+scale 1;
+ 
+vertices
+(
+(0 0 0)//0
+(10 0 0)//1
+(10 2 0) //2
+(0 2 0)//3
+(10 4 0)//4
+(0 4 0)//5
+
+(0 0 1)//6
+(10 0 1)//7
+(10 2 1) //8
+(0 2 1)//9
+(10 4 1)//10
+(0 4 1)//11
+);
+ 
+blocks
+(
+hex (2 3 0 1 8 9 6 7) (450  200 1) simpleGrading (1 5 1)
+hex (3 2 4 5 9 8 10 11) (450  200 1) simpleGrading (1 5 1)
+);
+ 
+edges
+(
+);
+ 
+boundary
+(
+    movingWall
+    {
+        type wall;
+        faces
+        (
+                (5 11 10 4)
+        );
+    }
+	movingWall1
+    {
+        type wall;
+        faces
+        (
+		(1 7 6 0)
+        );
+    }
+	right
+     { 
+	   type cyclic;
+	   neighbourPatch left;
+           faces  
+           (
+               (4 10 8 2)
+           );
+      }
+	left
+     { 
+           type cyclic;
+	   neighbourPatch right;
+           faces  
+           (
+               (3 9 11 5)
+           );
+      }
+	right1
+     { 
+	   type cyclic;
+	   neighbourPatch left1;
+           faces  
+           (
+               (2 8 7 1)
+           );
+      }
+	left1
+     { 
+           type cyclic;
+	   neighbourPatch right1;
+           faces  
+           (
+               (0 6 9 3)
+           );
+      }
+    frontAndBack
+    {
+        type empty;
+        faces
+        (
+            (3 5 4 2)
+            (0 3 2 1)
+            (6 7 8 9)
+            (9 8 10 11)
+        );
+    }
+);
+ 
+mergePatchPairs
+(
+);
+
+
+// ************************************************************************* //
